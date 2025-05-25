@@ -2,11 +2,6 @@
 body {
     margin: 0;
     font-family: 'Inter', sans-serif; /* You might need to link Google Fonts for 'Inter' */
-    /* To use 'Inter' font, add this to your <head> in index.html:
-       <link rel="preconnect" href="https://fonts.googleapis.com">
-       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-       <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    */
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #333; /* Default text color */
