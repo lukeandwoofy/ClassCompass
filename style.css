@@ -9,7 +9,7 @@ body {
 
 /* Gradient Background */
 .gradient-bg {
-    background: linear-gradient(to bottom right, #6B8E23, #20B2AA); /* blue-500 to purple-600 */
+    background: linear-gradient(to bottom right, #228b22, #20B2AA); /* blue-500 to purple-600 */
 }
 
 /* Flexbox Utilities */
