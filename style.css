@@ -10,9 +10,9 @@ body {
     line-height: 1.6;
 }
 
-/* Gradient Background */
+/* Gradient Background - Updated to #000000 and #1f9442 */
 .gradient-bg {
-    background: linear-gradient(135deg, #2e72d2, #8a2be2);
+    background: linear-gradient(135deg, #000000, #1f9442);
 }
 
 /* Flex Utilities */
@@ -40,7 +40,7 @@ body {
     border-radius: 0.5rem;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     width: 100%;
-    max-width: 28rem;
+    max-width: 48rem;
 }
 
 .text-center {
