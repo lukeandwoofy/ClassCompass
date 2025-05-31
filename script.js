@@ -85,6 +85,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const prevMarker = document.querySelector(`.marker[data-id="${highlightedClassroom.id}"]`);
             if (prevMarker) {
                 prevMarker.classList.remove('highlight');
+                prevMarker.classList.remove('pulse');
                 const prevLabel = prevMarker.querySelector('.marker-label');
                 if (prevLabel) prevLabel.remove();
             }
@@ -96,6 +97,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const marker = document.querySelector(`.marker[data-id="${classroom.id}"]`);
             if (marker) {
                 marker.classList.add('highlight');
+                marker.classList.remove('pulse'); // Reset animation
+                void marker.offsetWidth; // Force reflow to retrigger animation
                 marker.classList.add('pulse'); // Trigger the pulse animation
                 const label = document.createElement('span');
                 label.className = 'marker-label';
