@@ -26,8 +26,10 @@ document.addEventListener('DOMContentLoaded', () => {
     // Classroom locations grouped by section
     const classroomLocations = {
         maths: [
-            { id: 'm1', name: 'Room M-101', x: 20, y: 30, description: 'Algebra classroom.' },
-            { id: 'm2', name: 'Room M-102', x: 25, y: 35, description: 'Geometry classroom.' },
+            { id: 'm1', name: 'Room M-101', x: 15, y: 50, description: 'Maths classroom.' },
+            { id: 'm2', name: 'Room M-102', x: 30, y: 50, description: 'Maths classroom.' },
+            { id: 'm3', name: 'Room M-103', x: 45, y: 50, description: 'Maths classroom.' },
+            { id: 'm4', name: 'Room M-104', x: 60, y: 50, description: 'Maths classroom.' },
         ],
         english: [
             { id: 'e1', name: 'Room E-201', x: 40, y: 50, description: 'Literature classroom.' },
@@ -36,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
         xboxes: [
             { id: 'x1', name: 'X-201', x: 25, y: 75, description: 'Classroom in X-Boxes area.' },
             { id: 'x2', name: 'X-202', x: 25, y: 25, description: 'Classroom in X-Boxes area.' },
-            { id: 'x3', name: 'X-203', x: 63, y: 25, description: 'Classroom in X-Boxes area.' },
+            { id: 'x3', name: 'X-203', x: 65, y: 25, description: 'Classroom in X-Boxes area.' },
             { id: 'x4', name: 'X-204', x: 75, y: 75, description: 'Classroom in X-Boxes area.' },
         ],
     };
