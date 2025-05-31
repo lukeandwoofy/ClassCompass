@@ -4,15 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ClassCompass</title>
-    <link rel="preconnect" href="[https://fonts.googleapis.com](https://fonts.googleapis.com)">
-    <link rel="preconnect" href="[https://fonts.gstatic.com](https://fonts.gstatic.com)" crossorigin>
-    <link href="[https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap](https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap)" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
     <meta name="theme-color" content="#2e72d2">
 </head>
 <body>
-
     <div id="login-screen" class="min-h-screen gradient-bg flex-center p-4">
         <div class="card text-center">
             <h2 class="text-4xl font-bold mb-6">Welcome to ClassCompass!</h2>
@@ -48,18 +47,45 @@
                 </div>
             </div>
             <p class="text-lg text-gray-600 mb-6">
-                New to our school? Search for a classroom to find its location on the map!🥳🥳🥳🥳🥳
+                New to our school? Search for a classroom or select a section to find its location!🥳🥳🥳🥳🥳
             </p>
 
             <div class="search-section">
-                <input type="text" id="search-input" class="input-field flex-grow" placeholder="e.g., Library, Room 101, Cafeteria">
+                <input type="text" id="search-input" class="input-field flex-grow" placeholder="e.g., Library, Room M-101">
                 <button id="search-button" class="btn btn-primary">Search</button>
             </div>
             <p id="search-error-message" class="text-red-600 font-medium text-center mt-4 hidden"></p>
 
-            <div class="map-container relative w-full aspect-video bg-gray-100 rounded-lg overflow-hidden shadow-inner border border-gray-200 mt-6">
-                <img id="school-map" src="[https://placehold.co/1200x675/E0F2F7/000?text=YOUR+SCHOOL+MAP+HERE](https://placehold.co/1200x675/E0F2F7/000?text=YOUR+SCHOOL+MAP+HERE)" alt="School Map">
-                <div id="marker-container"></div>
+            <!-- Section Navigation -->
+            <div class="section-nav mb-6">
+                <button class="btn btn-primary section-btn" data-section="maths">Maths Corridor</button>
+                <button class="btn btn-secondary section-btn" data-section="english">English Corridor</button>
+                <button class="btn btn-secondary section-btn" data-section="xboxes">X-Boxes</button>
+            </div>
+
+            <!-- Scrollable Sections -->
+            <div class="sections-container">
+                <div class="section" data-section="maths">
+                    <h2 class="text-2xl font-bold mb-4">Maths Corridor</h2>
+                    <div class="map-container relative w-full aspect-video bg-gray-100 rounded-lg overflow-hidden shadow-inner border border-gray-200">
+                        <img id="school-map-maths" src="https://drive.google.com/uc?export=download&id=15A2cNcng3DeI4Ym6YnZK5T1l8Ra1OtvM" alt="Maths Corridor Map">
+                        <div id="marker-container-maths"></div>
+                    </div>
+                </div>
+                <div class="section" data-section="english" style="display: none;">
+                    <h2 class="text-2xl font-bold mb-4">English Corridor</h2>
+                    <div class="map-container relative w-full aspect-video bg-gray-100 rounded-lg overflow-hidden shadow-inner border border-gray-200">
+                        <img id="school-map-english" src="https://drive.google.com/uc?export=download&id=1jt2o6ZNYgLthKxGf20muBBdxoPj61-Kp" alt="English Corridor Map">
+                        <div id="marker-container-english"></div>
+                    </div>
+                </div>
+                <div class="section" data-section="xboxes" style="display: none;">
+                    <h2 class="text-2xl font-bold mb-4">X-Boxes</h2>
+                    <div class="map-container relative w-full aspect-video bg-gray-100 rounded-lg overflow-hidden shadow-inner border border-gray-200">
+                        <img id="school-map-xboxes" src="https://drive.google.com/uc?export=download&id=1XrOirykYPBfq3v8rpWRNY-UxW53W46fG" alt="X-Boxes Map">
+                        <div id="marker-container-xboxes"></div>
+                    </div>
+                </div>
             </div>
 
             <div id="classroom-details" class="details-card hidden">
