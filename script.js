@@ -26,10 +26,12 @@ document.addEventListener('DOMContentLoaded', () => {
     // Classroom locations grouped by section
     const classroomLocations = {
         maths: [
-            { id: 'm1', name: 'Room M-101', x: 15, y: 50, description: 'Maths classroom.' },
-            { id: 'm2', name: 'Room M-102', x: 30, y: 50, description: 'Maths classroom.' },
-            { id: 'm3', name: 'Room M-103', x: 45, y: 50, description: 'Maths classroom.' },
-            { id: 'm4', name: 'Room M-104', x: 60, y: 50, description: 'Maths classroom.' },
+            { id: 'm1', name: 'Room E138', x: 10, y: 50, description: 'Maths classroom.' },
+            { id: 'm2', name: 'Room E139', x: 24, y: 50, description: 'Maths classroom.' },
+            { id: 'm3', name: 'Room E140', x: 38, y: 50, description: 'Maths classroom.' },
+            { id: 'm4', name: 'Room E142', x: 52, y: 50, description: 'Maths classroom.' },
+            { id: 'm5', name: 'Room E143', x: 66, y: 50, description: 'Maths classroom.' },
+            { id: 'm6', name: 'Room E145', x: 80, y: 50, description: 'Maths classroom.' },
         ],
         english: [
             { id: 'e1', name: 'Room E-201', x: 40, y: 50, description: 'Literature classroom.' },
