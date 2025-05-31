@@ -36,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
         xboxes: [
             { id: 'x1', name: 'X-201', x: 25, y: 75, description: 'Classroom in X-Boxes area.' },
             { id: 'x2', name: 'X-202', x: 25, y: 25, description: 'Classroom in X-Boxes area.' },
-            { id: 'x3', name: 'X-203', x: 50, y: 25, description: 'Classroom in X-Boxes area.' },
+            { id: 'x3', name: 'X-203', x: 72, y: 25, description: 'Classroom in X-Boxes area.' },
             { id: 'x4', name: 'X-204', x: 75, y: 75, description: 'Classroom in X-Boxes area.' },
         ],
     };
