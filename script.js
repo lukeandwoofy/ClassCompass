@@ -11,36 +11,39 @@ document.addEventListener('DOMContentLoaded', () => {
     const searchInput = document.getElementById('search-input');
     const searchButton = document.getElementById('search-button');
     const searchErrorMessage = document.getElementById('search-error-message');
-    const schoolMap = document.getElementById('school-map');
-    const markerContainer = document.getElementById('marker-container');
     const classroomDetails = document.getElementById('classroom-details');
     const detailsName = document.getElementById('details-name');
     const detailsDescription = document.getElementById('details-description');
+    const sectionButtons = document.querySelectorAll('.section-btn');
+    const sections = document.querySelectorAll('.section');
 
     // --- Application State ---
-    const SECRET_PASSWORD = 'schoolmap123'; // The required password
-    let currentUsername = ''; // Stores the username entered by the user
-    let highlightedClassroom = null; // Stores the currently highlighted classroom object
+    const SECRET_PASSWORD = 'schoolmap123';
+    let currentUsername = '';
+    let highlightedClassroom = null;
+    let currentSection = 'maths'; // Default section
 
-    // Define your school's classroom locations.
-    // IMPORTANT:
-    // - Replace 'https://placehold.co/1200x675/E0F2F7/000?text=YOUR+SCHOOL+MAP+HERE'
-    //   in index.html with the actual URL or path to your school map image.
-    // - Adjust the 'x' and 'y' percentage values for each classroom to match its exact
-    //   position on YOUR school map image.
-    const classroomLocations = [
-        { id: 'c1', name: 'Main Office', x: 20, y: 15, description: 'First stop for new students!' },
-        { id: 'c2', name: 'Library', x: 50, y: 30, description: 'Quiet study area and book collection.' },
-        { id: 'c3', name: 'Science Lab', x: 70, y: 20, description: 'Experiments and discoveries happen here.' },
-        { id: 'c4', name: 'Gymnasium', x: 15, y: 60, description: 'Sports and physical education.' },
-        { id: 'c5', name: 'Cafeteria', x: 40, y: 75, description: 'Lunch and snack breaks.' },
-        { id: 'c6', name: 'Art Room', x: 80, y: 50, description: 'Unleash your creativity!' },
-        { id: 'c7', name: 'Music Room', x: 65, y: 65, description: 'Where melodies are made.' },
-        { id: 'c8', name: 'Room 101', x: 30, y: 40, description: 'General classroom.' },
-        { id: 'c9', name: 'Room 102', x: 35, y: 45, description: 'General classroom.' },
-        { id: 'c10', name: 'Auditorium', x: 55, y: 90, description: 'For assemblies and performances.' },
-        { id: 'c11', name: 'Counseling Office', x: 25, y: 25, description: 'Guidance and support services.' },
-    ];
+    // Classroom locations grouped by section
+    const classroomLocations = {
+        maths: [
+            { id: 'm1', name: 'Room E138', x: 65, y: 15, description: 'Maths classroom.' },
+            { id: 'm2', name: 'Room E139', x: 15, y: 15, description: 'Maths classroom.' },
+            { id: 'm3', name: 'Room E140', x: 65, y: 35, description: 'Maths classroom.' },
+            { id: 'm4', name: 'Room E142', x: 65, y: 55, description: 'Maths classroom.' },
+            { id: 'm5', name: 'Room E143', x: 15, y: 35, description: 'Maths classroom.' },
+            { id: 'm6', name: 'Room E145', x: 15, y: 70, description: 'Maths classroom.' },
+        ],
+        english: [
+            { id: 'e1', name: 'Room E-201', x: 40, y: 50, description: 'Literature classroom.' },
+            { id: 'e2', name: 'Library', x: 50, y: 50, description: 'Main library with study areas.' },
+        ],
+        xboxes: [
+            { id: 'x1', name: 'X-201', x: 25, y: 75, description: 'Classroom in X-Boxes area.' },
+            { id: 'x2', name: 'X-202', x: 25, y: 25, description: 'Classroom in X-Boxes area.' },
+            { id: 'x3', name: 'X-203', x: 65, y: 25, description: 'Classroom in X-Boxes area.' },
+            { id: 'x4', name: 'X-204', x: 75, y: 75, description: 'Classroom in X-Boxes area.' },
+        ],
+    };
 
     // --- Functions ---
 
@@ -50,22 +53,41 @@ document.addEventListener('DOMContentLoaded', () => {
      * @param {HTMLElement} elementToHide
      */
     function showScreen(elementToShow, elementToHide) {
-        elementToShow.style.display = 'flex'; // Or 'block' depending on container's primary layout
+        elementToShow.style.display = 'flex';
         elementToHide.style.display = 'none';
+    }
+
+    /**
+     * Shows the selected section and hides others.
+     * @param {string} sectionId
+     */
+    function showSection(sectionId) {
+        currentSection = sectionId;
+        sections.forEach(section => {
+            section.style.display = section.dataset.section === sectionId ? 'block' : 'none';
+        });
+        sectionButtons.forEach(btn => {
+            btn.classList.toggle('btn-primary', btn.dataset.section === sectionId);
+            btn.classList.toggle('btn-secondary', btn.dataset.section !== sectionId);
+        });
+        renderMarkers(sectionId);
+        highlightClassroom(null); // Clear highlight when switching sections
     }
 
     /**
      * Highlights a specific classroom on the map and shows its details.
      * @param {Object|null} classroom - The classroom object to highlight, or null to clear.
+     * @param {string} sectionId - The section the classroom belongs to.
      */
-    function highlightClassroom(classroom) {
+    function highlightClassroom(classroom, sectionId = currentSection) {
         // Clear previous highlight
         if (highlightedClassroom) {
             const prevMarker = document.querySelector(`.marker[data-id="${highlightedClassroom.id}"]`);
             if (prevMarker) {
                 prevMarker.classList.remove('highlight');
+                prevMarker.classList.remove('pulse');
                 const prevLabel = prevMarker.querySelector('.marker-label');
-                if (prevLabel) prevLabel.remove(); // Remove label on deselect
+                if (prevLabel) prevLabel.remove();
             }
         }
 
@@ -75,7 +97,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const marker = document.querySelector(`.marker[data-id="${classroom.id}"]`);
             if (marker) {
                 marker.classList.add('highlight');
-                // Add label to highlighted marker
+                marker.classList.remove('pulse'); // Reset animation
+                void marker.offsetWidth; // Force reflow to retrigger animation
+                marker.classList.add('pulse'); // Trigger the pulse animation
                 const label = document.createElement('span');
                 label.className = 'marker-label';
                 label.textContent = classroom.name;
@@ -91,26 +115,27 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     /**
-     * Renders all classroom markers on the map.
+     * Renders markers for the given section.
+     * @param {string} sectionId
      */
-    function renderMarkers() {
-        // Clear existing markers first
+    function renderMarkers(sectionId) {
+        const markerContainer = document.getElementById(`marker-container-${sectionId}`);
         markerContainer.innerHTML = '';
 
-        classroomLocations.forEach(classroom => {
+        classroomLocations[sectionId].forEach(classroom => {
             const marker = document.createElement('div');
             marker.className = 'marker';
-            marker.dataset.id = classroom.id; // Store ID for easy lookup
+            marker.dataset.id = classroom.id;
             marker.style.left = `${classroom.x}%`;
             marker.style.top = `${classroom.y}%`;
-            marker.title = classroom.name; // Tooltip
+            marker.title = classroom.name;
 
             marker.addEventListener('click', () => {
-                highlightClassroom(classroom);
-                // Clear search input when clicking a marker
+                highlightClassroom(classroom, sectionId);
                 searchInput.value = '';
                 searchErrorMessage.classList.add('hidden');
             });
+
             markerContainer.appendChild(marker);
         });
     }
@@ -120,7 +145,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Login Form Submission
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault();
-        errorMessage.classList.add('hidden'); // Hide previous errors
+        errorMessage.classList.add('hidden');
 
         const username = usernameInput.value.trim();
         const password = passwordInput.value;
@@ -129,8 +154,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentUsername = username;
             displayUsername.textContent = currentUsername;
             showScreen(appScreen, loginScreen);
-            renderMarkers(); // Render markers when app screen is shown
-            highlightClassroom(null); // Clear any previous highlight
+            showSection(currentSection); // Show default section
         } else if (username === '') {
             errorMessage.textContent = 'Please enter a username.';
             errorMessage.classList.remove('hidden');
@@ -143,28 +167,46 @@ document.addEventListener('DOMContentLoaded', () => {
     // Logout Button Click
     logoutButton.addEventListener('click', () => {
         currentUsername = '';
-        usernameInput.value = ''; // Clear login form fields
+        usernameInput.value = '';
         passwordInput.value = '';
-        searchInput.value = ''; // Clear search field
+        searchInput.value = '';
         searchErrorMessage.classList.add('hidden');
-        highlightClassroom(null); // Clear map highlight
+        highlightClassroom(null);
         showScreen(loginScreen, appScreen);
+    });
+
+    // Section Button Clicks
+    sectionButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            showSection(button.dataset.section);
+        });
     });
 
     // Search Button Click
     searchButton.addEventListener('click', () => {
-        searchErrorMessage.classList.add('hidden'); // Hide previous errors
+        searchErrorMessage.classList.add('hidden');
         const searchTerm = searchInput.value.toLowerCase().trim();
 
-        const found = classroomLocations.find(
-            (classroom) => classroom.name.toLowerCase() === searchTerm
-        );
+        let found = null;
+        let foundSection = null;
+
+        // Search across all sections
+        for (const sectionId in classroomLocations) {
+            found = classroomLocations[sectionId].find(
+                (classroom) => classroom.name.toLowerCase() === searchTerm
+            );
+            if (found) {
+                foundSection = sectionId;
+                break;
+            }
+        }
 
         if (found) {
-            highlightClassroom(found);
+            showSection(foundSection);
+            highlightClassroom(found, foundSection);
             searchErrorMessage.classList.add('hidden');
         } else {
-            highlightClassroom(null); // Clear highlight if not found
+            highlightClassroom(null);
             searchErrorMessage.textContent = `"${searchInput.value}" not found. Please try another classroom name.`;
             searchErrorMessage.classList.remove('hidden');
         }
@@ -173,12 +215,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Search Input Enter Key Press
     searchInput.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
-            searchButton.click(); // Simulate a click on the search button
+            searchButton.click();
         }
     });
-
-    // --- Initial Setup (after DOM is loaded) ---
-    // Ensure the login screen is visible and app screen is hidden initially.
-    // This is handled by default CSS (display: none on app-screen) and JS (display:flex on login-screen)
-    // No specific function call needed here unless default display is changed.
 });
