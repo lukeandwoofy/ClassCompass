@@ -96,6 +96,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const marker = document.querySelector(`.marker[data-id="${classroom.id}"]`);
             if (marker) {
                 marker.classList.add('highlight');
+                marker.classList.add('pulse'); // Trigger the pulse animation
                 const label = document.createElement('span');
                 label.className = 'marker-label';
                 label.textContent = classroom.name;
@@ -131,6 +132,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 searchInput.value = '';
                 searchErrorMessage.classList.add('hidden');
             });
+
             markerContainer.appendChild(marker);
         });
     }
