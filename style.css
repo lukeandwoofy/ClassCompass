@@ -206,7 +206,7 @@ body {
 }
 
 .marker.pulse {
-    animation: pulse 0.3s ease-in-out 2;
+    animation: pulse 0.5s ease-in-out 2;
 }
 
 @keyframes pulse {
@@ -214,7 +214,7 @@ body {
         transform: translate(-50%, -50%) scale(1);
     }
     50% {
-        transform: translate(-50%, -50%) scale(1.5);
+        transform: translate(-50%, -50%) scale(1.8);
     }
     100% {
         transform: translate(-50%, -50%) scale(1);
