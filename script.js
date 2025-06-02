@@ -16,6 +16,8 @@ document.addEventListener('DOMContentLoaded', () => {
     const detailsDescription = document.getElementById('details-description');
     const sectionButtons = document.querySelectorAll('.section-btn');
     const sections = document.querySelectorAll('.section');
+    const notification = document.getElementById('notification');
+    const closeBtn = document.querySelector('.close-btn');
 
     // --- Application State ---
     const SECRET_PASSWORDS = ['schoolmap123', 'anotherpassword', 'thirdpassword']; // Array of allowed passwords
@@ -150,7 +152,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentUsername = username;
             displayUsername.textContent = currentUsername;
             showScreen(appScreen, loginScreen);
-            showSection(currentSection); // Show default section
+            notification.classList.remove('hidden'); // Show notification on login
         } else if (username === '') {
             errorMessage.textContent = 'Please enter a username.';
             errorMessage.classList.remove('hidden');
@@ -169,6 +171,12 @@ document.addEventListener('DOMContentLoaded', () => {
         searchErrorMessage.classList.add('hidden');
         highlightClassroom(null);
         showScreen(loginScreen, appScreen);
+        notification.classList.add('hidden'); // Hide notification on logout
+    });
+
+    // Close Notification Button Click
+    closeBtn.addEventListener('click', () => {
+        notification.classList.add('hidden');
     });
 
     // Section Button Clicks
