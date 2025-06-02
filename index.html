@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="manifest" href="manifest.json">
     <link rel="stylesheet" href="style.css">
-    <meta name="theme-color" content="#2e72d2">
+    <meta name="theme-color" content="#1f9442">
 </head>
 <body>
     <div id="login-screen" class="min-h-screen gradient-bg flex-center p-4">
@@ -38,6 +38,10 @@
     </div>
 
     <div id="app-screen" class="min-h-screen gradient-bg flex-col-center p-4" style="display: none;">
+        <div id="notification" class="notification hidden">
+            <span>Welcome to ClassCompass</span>
+            <button class="close-btn">&times;</button>
+        </div>
         <div class="card w-full max-w-5xl mb-6 text-center">
             <div class="header-section">
                 <h1 class="text-4xl font-extrabold">ClassCompass</h1>
