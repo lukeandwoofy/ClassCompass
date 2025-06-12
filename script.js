@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
-    // --- DOM Elements ---
+    
     const loginScreen = document.getElementById('login-screen');
     const appScreen = document.getElementById('app-screen');
     const loginForm = document.getElementById('login-form');
@@ -19,13 +19,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const notification = document.getElementById('notification');
     const closeBtn = document.querySelector('.close-btn');
 
-    // --- Application State ---
-    const SECRET_PASSWORDS = ['schoolmap123', 'anotherpassword', 'thirdpassword']; // Array of allowed passwords
+    const SECRET_PASSWORDS = ['schoolmap123', 'anotherpassword', 'thirdpassword']; // the passwords👋👋
     let currentUsername = '';
     let highlightedClassroom = null;
-    let currentSection = 'maths'; // Default section
+    let currentSection = 'maths'; 
 
-    // Classroom locations grouped by section
+// the classroom locations!
     const classroomLocations = {
         maths: [
             { id: 'm1', name: 'Room E138', x: 65, y: 15, description: 'Maths classroom.' },
@@ -43,22 +42,13 @@ document.addEventListener('DOMContentLoaded', () => {
         ],
     };
 
-    // --- Functions ---
+    // the most important functions of all time
 
-    /**
-     * Shows a given element and hides others based on the screen flow.
-     * @param {HTMLElement} elementToShow
-     * @param {HTMLElement} elementToHide
-     */
     function showScreen(elementToShow, elementToHide) {
         elementToShow.style.display = 'flex';
         elementToHide.style.display = 'none';
     }
 
-    /**
-     * Shows the selected section and hides others.
-     * @param {string} sectionId
-     */
     function showSection(sectionId) {
         currentSection = sectionId;
         sections.forEach(section => {
@@ -69,16 +59,10 @@ document.addEventListener('DOMContentLoaded', () => {
             btn.classList.toggle('btn-secondary', btn.dataset.section !== sectionId);
         });
         renderMarkers(sectionId);
-        highlightClassroom(null); // Clear highlight when switching sections
+        highlightClassroom(null); 
     }
 
-    /**
-     * Highlights a specific classroom on the map and shows its details.
-     * @param {Object|null} classroom - The classroom object to highlight, or null to clear.
-     * @param {string} sectionId - The section the classroom belongs to.
-     */
     function highlightClassroom(classroom, sectionId = currentSection) {
-        // Clear previous highlight
         if (highlightedClassroom) {
             const prevMarker = document.querySelector(`.marker[data-id="${highlightedClassroom.id}"]`);
             if (prevMarker) {
@@ -95,9 +79,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const marker = document.querySelector(`.marker[data-id="${classroom.id}"]`);
             if (marker) {
                 marker.classList.add('highlight');
-                marker.classList.remove('pulse'); // Reset animation
-                void marker.offsetWidth; // Force reflow to retrigger animation
-                marker.classList.add('pulse'); // Trigger the pulse animation
+                marker.classList.remove('pulse'); 
+                void marker.offsetWidth; 
+                marker.classList.add('pulse'); 
                 const label = document.createElement('span');
                 label.className = 'marker-label';
                 label.textContent = classroom.name;
@@ -112,10 +96,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    /**
-     * Renders markers for the given section.
-     * @param {string} sectionId
-     */
     function renderMarkers(sectionId) {
         const markerContainer = document.getElementById(`marker-container-${sectionId}`);
         markerContainer.innerHTML = '';
@@ -138,9 +118,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Event Handlers ---
-
-    // Login Form Submission
     loginForm.addEventListener('submit', (event) => {
         event.preventDefault();
         errorMessage.classList.add('hidden');
@@ -152,7 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             currentUsername = username;
             displayUsername.textContent = currentUsername;
             showScreen(appScreen, loginScreen);
-            notification.classList.remove('hidden'); // Show notification on login
+            notification.classList.remove('hidden'); 
         } else if (username === '') {
             errorMessage.textContent = 'Please enter a username.';
             errorMessage.classList.remove('hidden');
@@ -162,7 +139,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Logout Button Click
     logoutButton.addEventListener('click', () => {
         currentUsername = '';
         usernameInput.value = '';
@@ -171,22 +147,20 @@ document.addEventListener('DOMContentLoaded', () => {
         searchErrorMessage.classList.add('hidden');
         highlightClassroom(null);
         showScreen(loginScreen, appScreen);
-        notification.classList.add('hidden'); // Hide notification on logout
+        notification.classList.add('hidden'); // Hides that annoying green notification when you log out
     });
 
-    // Close Notification Button Click
     closeBtn.addEventListener('click', () => {
         notification.classList.add('hidden');
     });
-
-    // Section Button Clicks
+    
     sectionButtons.forEach(button => {
         button.addEventListener('click', () => {
             showSection(button.dataset.section);
         });
     });
 
-    // Search Button Click
+    // IMPORTANT the search button
     searchButton.addEventListener('click', () => {
         searchErrorMessage.classList.add('hidden');
         const searchTerm = searchInput.value.toLowerCase().trim();
@@ -194,7 +168,7 @@ document.addEventListener('DOMContentLoaded', () => {
         let found = null;
         let foundSection = null;
 
-        // Search across all sections
+        // IMPORTANT allows you to search across both the X-Boxes and the Maths Corridor
         for (const sectionId in classroomLocations) {
             found = classroomLocations[sectionId].find(
                 (classroom) => classroom.name.toLowerCase() === searchTerm
@@ -216,7 +190,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Search Input Enter Key Press
     searchInput.addEventListener('keypress', (event) => {
         if (event.key === 'Enter') {
             searchButton.click();
