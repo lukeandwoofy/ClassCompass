@@ -10,7 +10,7 @@ body {
     line-height: 1.6;
 }
 
-
+/* IMPORTANT gives you that black to green background */
 .gradient-bg {
     background: linear-gradient(135deg, #000000, #1f9442);
 }
@@ -33,7 +33,7 @@ body {
     padding: 1rem;
 }
 
-
+/* IMPORTANT gives you the main white background for the main login screen and the main PWA */
 .card {
     background: white;
     padding: 2rem;
@@ -96,7 +96,7 @@ body {
     margin-bottom: 0.25rem;
     font-weight: 500;
 }
-
+/* IMPORTANT the sizing and design of the input box for the search field */
 .input-field {
     width: 100%;
     padding: 0.5rem;
@@ -257,7 +257,7 @@ body {
     display: none;
 }
 
-/* notifications design */
+/* IMPORTANT the design, size and colouring for the green notification when you log in */
 .notification {
     position: fixed;
     top: -100px;
