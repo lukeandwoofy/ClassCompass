@@ -10,12 +10,12 @@ body {
     line-height: 1.6;
 }
 
-/* Gradient Background */
+
 .gradient-bg {
     background: linear-gradient(135deg, #000000, #1f9442);
 }
 
-/* Flex Utilities */
+
 .flex-center {
     display: flex;
     justify-content: center;
@@ -33,7 +33,7 @@ body {
     padding: 1rem;
 }
 
-/* Card Styling */
+
 .card {
     background: white;
     padding: 2rem;
@@ -257,7 +257,7 @@ body {
     display: none;
 }
 
-/* Notification Styles */
+/* notifications design */
 .notification {
     position: fixed;
     top: -100px;
